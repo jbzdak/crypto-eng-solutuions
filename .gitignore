@@ -2,4 +2,3 @@ venv
 cmake-build-*
 __pycache__
 py[co]
-.cache

@@ -97,11 +97,14 @@ def solution_dbm():
 
   tmpdir = pathlib.Path(__file__).parent / 'tmpfiles'
 
-  for N in range(1, 8):
-    file_name = tmpdir / str(os.getpid())
-    try:
-      with dbm.gnu.open(str(file_name), 'nu') as db:
-        print(find_collisions(N, db) + [file_name.stat()])
-    finally:
-      os.remove(str(file_name))
+  with open('dbm-log', 'w', buffering=1) as log:
+    for N in range(1, 8):
+      file_name = tmpdir / str(os.getpid())
+      try:
+        with dbm.gnu.open(str(file_name), 'nu') as db:
+          print(find_collisions(N, db) + [file_name.stat()])
+          print(find_collisions(N, db) + [file_name.stat()], file=log)
+          print(file=log)
+      finally:
+        os.remove(str(file_name))
 
